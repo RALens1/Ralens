@@ -5,6 +5,7 @@ import httpx
 from bs4 import BeautifulSoup
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 import psycopg
 from openai import AsyncOpenAI
@@ -24,6 +25,9 @@ SOURCES = [
 ]
 
 app = FastAPI(title="R.A.Lens API", version="1.0.0")
+@app.get("/")
+def home():
+    return FileResponse("index.html")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 class AnalyzeRequest(BaseModel):
